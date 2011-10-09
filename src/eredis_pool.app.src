@@ -1,0 +1,21 @@
+{application, eredis_pool,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { eredis_pool_app, []}},
+  {env, [
+          {pools, [
+                    {pool1, [
+                              {size, 10},
+                              {max_overflow, 20}
+                            ]
+                    }
+	          ]
+          }
+        ]}
+ ]}.
