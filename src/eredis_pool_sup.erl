@@ -25,6 +25,7 @@ start_link() ->
 
 %% ===================================================================
 %% @doc create new pool.
+%% @end
 %% ===================================================================
 -spec(create_pool(PoolName::atom(), Size::integer()) -> 
              {ok, pid()} | {error,{already_started, pid()}}).
@@ -41,6 +42,7 @@ create_pool(PoolName, Size) ->
 
 %% ===================================================================
 %% @doc delet pool and disconnected to Redis.
+%% @end
 %% ===================================================================
 -spec(delete_pool(PoolName::atom()) -> ok | {error,not_found}).
 

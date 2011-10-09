@@ -34,8 +34,7 @@ __Behaviours:__ [`supervisor`](supervisor.md).<a name="index"></a>
 
 
 
-create new pool.
-===================================================================<a name="delete_pool-1"></a>
+create new pool.<a name="delete_pool-1"></a>
 
 ###delete_pool/1##
 
@@ -48,8 +47,7 @@ create new pool.
 
 
 
-delet pool and disconnected to Redis.
-===================================================================<a name="init-1"></a>
+delet pool and disconnected to Redis.<a name="init-1"></a>
 
 ###init/1##
 

@@ -38,8 +38,7 @@ Executes the given command in the specified connection.</td></tr><tr><td valign=
 
 
 
-create new pool.
-===================================================================<a name="delete_pool-1"></a>
+create new pool.<a name="delete_pool-1"></a>
 
 ###delete_pool/1##
 
@@ -52,8 +51,7 @@ create new pool.
 
 
 
-delet pool and disconnected to Redis.
-===================================================================<a name="q-2"></a>
+delet pool and disconnected to Redis.<a name="q-2"></a>
 
 ###q/2##
 
