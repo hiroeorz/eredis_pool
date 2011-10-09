@@ -1,0 +1,3 @@
+{application,eredis_pool}.
+{packages,[]}.
+{modules,[eredis_pool,eredis_pool_app,eredis_pool_sup]}.

@@ -16,8 +16,8 @@
 -define(TIMEOUT, 5000).
 
 %% API
--export([start/0, start/2, stop/0, stop/1]).
--export([q/2, q/3]).
+-export([start/0, stop/0]).
+-export([q/2, q/3, create_pool/2, delete_pool/1]).
 
 %%%===================================================================
 %%% API functions
@@ -29,11 +29,22 @@ start() ->
 stop() ->
     application:stop(?MODULE).
 
-start(_Type, _Args) ->
-    supervisor:start_link({local, eredis_sup}, ?MODULE, []).
+%% ===================================================================
+%% @doc create new pool.
+%% ===================================================================
+-spec(create_pool(PoolName::atom(), Size::integer()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
 
-stop(_State) -> 
-    ok.
+create_pool(PoolName, Size) ->
+    eredis_pool_sup:create_pool(PoolName, Size).
+
+%% ===================================================================
+%% @doc delet pool and disconnected to Redis.
+%% ===================================================================
+-spec(delete_pool(PoolName::atom()) -> ok | {error,not_found}).
+
+delete_pool(PoolName) ->
+    eredis_pool_sup:delete_pool(PoolName).
 
 %%--------------------------------------------------------------------
 %% @doc
