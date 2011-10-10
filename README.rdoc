@@ -1,0 +1,40 @@
+= eredis_pool
+
+eredis_pool is simple clients using eredis and poolboy 
+
+eredis:
+https://github.com/jdavisp3/eredis
+
+poolboy:
+https://github.com/devinus/poolboy
+
+==Setup
+
+ $ git clone git://github.com/hiroeorz/eredis_pool.git
+ $ cd eredis_pool
+ $ make get-deps
+ $ make
+
+==Testing
+ $ make check
+
+==Examples
+
+application start.
+ eredis_pool:start().
+ ok
+
+key-value set and get
+ eredis_pool:q(default, ["SET", "foo", "bar"]).
+ {ok,<<"OK">>}
+ 
+ eredis_pool:q(default, ["GET", "foo"]).       
+ {ok,<<"bar">>}
+ 
+create new pool and delete pool
+ eredis_pool:create_pool(pool1, 10).
+ {ok,<0.64.0>}
+
+ eredis_pool:delete_pool(pool1).    
+ ok
+
