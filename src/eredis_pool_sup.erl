@@ -75,7 +75,6 @@ init([]) ->
                                   {PoolName, {poolboy, start_link, [Args]},
                                    Restart, Shutdown, Type, [poolboy, eredis]}
                           end, Pools),
-?debugVal(PoolSpecs),
 
     {ok, {SupFlags, PoolSpecs}}.
 

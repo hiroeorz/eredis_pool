@@ -1,6 +1,6 @@
 = eredis_pool
 
-eredis_pool is simple clients using eredis and poolboy 
+eredis_pool is Pool of Redis clients, using eredis and poolboy.
 
 eredis:
 https://github.com/jdavisp3/eredis
@@ -31,10 +31,17 @@ key-value set and get
  eredis_pool:q(default, ["GET", "foo"]).       
  {ok,<<"bar">>}
  
-create new pool and delete pool
+create new pool
  eredis_pool:create_pool(pool1, 10).
  {ok,<0.64.0>}
 
+using new pool
+ eredis_pool:q(pool1, ["GET", "foo"]).       
+ {ok,<<"bar">>}
+
+delete pool
  eredis_pool:delete_pool(pool1).    
  ok
 
+Other commands is here.
+http://redis.io/commands
