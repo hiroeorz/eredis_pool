@@ -21,25 +21,25 @@ https://github.com/devinus/poolboy
 ==Settings
 edit src/eredis_pool.app.src
 
-{application, eredis_pool,
- [
-  {description, ""},
-  {vsn, "1"},
-  {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib
-                 ]},
-  {mod, { eredis_pool_app, []}},
-  {env, [
-          {pools, [
-                   {default, [
-                              {size, 10},
-                              {max_overflow, 20}
-                             ]}
-	          ]}
-        ]}
- ]}.
+ {application, eredis_pool,
+  [
+   {description, ""},
+   {vsn, "1"},
+   {registered, []},
+   {applications, [
+                   kernel,
+                   stdlib
+                  ]},
+   {mod, { eredis_pool_app, []}},
+   {env, [
+           {pools, [
+                    {default, [
+                               {size, 10},
+                               {max_overflow, 20}
+                              ]}
+                   ]}
+         ]}
+  ]}.
 
 add new pools.
   {env, [
