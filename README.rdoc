@@ -63,7 +63,7 @@ add new pools.
                               {password, "abc"},
                               {reconnect_sleep, 100}
                              ]}
-	          ]}
+                  ]}
         ]}
 
 
@@ -84,23 +84,7 @@ create new pool with default settings.
  eredis_pool:create_pool(pool1, 10).
  {ok,<0.64.0>}
 
-host
- eredis_pool:create_pool(pool1, 10, "127.0.0.1").
- {ok,<0.64.0>}
-
-port 
- eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379).
- {ok,<0.64.0>}
-
-database
- eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db").
- {ok,<0.64.0>}
-
-password
- eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db", "abc").
- {ok,<0.64.0>}
-
-reconnect sleep
+and omissible argments(host, port, database, password reconnect_sleep).
  eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db", "abc", 100).
  {ok,<0.64.0>}
 
