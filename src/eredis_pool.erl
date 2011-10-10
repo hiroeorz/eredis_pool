@@ -17,7 +17,10 @@
 
 %% API
 -export([start/0, stop/0]).
--export([q/2, q/3, create_pool/2, delete_pool/1]).
+-export([q/2, q/3, 
+         create_pool/2, create_pool/3, create_pool/4, create_pool/5,
+         create_pool/6, create_pool/7, 
+         delete_pool/1]).
 
 %%%===================================================================
 %%% API functions
@@ -37,7 +40,51 @@ stop() ->
              {ok, pid()} | {error,{already_started, pid()}}).
 
 create_pool(PoolName, Size) ->
-    eredis_pool_sup:create_pool(PoolName, Size).
+    eredis_pool_sup:create_pool(PoolName, Size, []).
+
+-spec(create_pool(PoolName::atom(), Size::integer(), Host::string()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(PoolName, Size, Host) ->
+    eredis_pool_sup:create_pool(PoolName, Size, [{host, Host}]).
+
+-spec(create_pool(PoolName::atom(), Size::integer(), 
+                  Host::string(), Port::integer()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(PoolName, Size, Host, Port) ->
+    eredis_pool_sup:create_pool(PoolName, Size, [{host, Host}, {port, Port}]).
+
+-spec(create_pool(PoolName::atom(), Size::integer(), 
+                  Host::string(), Port::integer(), Database::string()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(PoolName, Size, Host, Port, Database) ->
+    eredis_pool_sup:create_pool(PoolName, Size, [{host, Host}, {port, Port},
+                                                 {database, Database}]).
+
+-spec(create_pool(PoolName::atom(), Size::integer(), 
+                  Host::string(), Port::integer(), 
+                  Database::string(), Password::string()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(PoolName, Size, Host, Port, Database, Password) ->
+    eredis_pool_sup:create_pool(PoolName, Size, [{host, Host}, {port, Port},
+                                                 {database, Database},
+                                                 {password, Password}]).
+
+-spec(create_pool(PoolName::atom(), Size::integer(), 
+                  Host::string(), Port::integer(), 
+                  Database::string(), Password::string(),
+                  ReconnectSleep::integer()) -> 
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(PoolName, Size, Host, Port, Database, Password, ReconnectSleep) ->
+    eredis_pool_sup:create_pool(PoolName, Size, [{host, Host}, {port, Port},
+                                                 {database, Database},
+                                                 {password, Password},
+                                                 {reconnect_sleep, ReconnectSleep}]).
+
 
 %% ===================================================================
 %% @doc delet pool and disconnected to Redis.

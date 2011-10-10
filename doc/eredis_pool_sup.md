@@ -14,21 +14,21 @@ __Behaviours:__ [`supervisor`](supervisor.md).<a name="index"></a>
 ##Function Index##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#create_pool-2">create_pool/2</a></td><td>create new pool.</td></tr><tr><td valign="top"><a href="#delete_pool-1">delete_pool/1</a></td><td>delet pool and disconnected to Redis.</td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-0">start_link/0</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#create_pool-3">create_pool/3</a></td><td>create new pool.</td></tr><tr><td valign="top"><a href="#delete_pool-1">delete_pool/1</a></td><td>delet pool and disconnected to Redis.</td></tr><tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr><tr><td valign="top"><a href="#start_link-0">start_link/0</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
 
 ##Function Details##
 
-<a name="create_pool-2"></a>
+<a name="create_pool-3"></a>
 
-###create_pool/2##
-
-
+###create_pool/3##
 
 
-<pre>create_pool(PoolName::atom(), Size::integer()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Options::[tuple()]) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
 <br></br>
 
 

@@ -17,7 +17,7 @@ __Authors:__ Hiroe Shin ([`shin@mac-hiroe-orz-17.local`](mailto:shin@mac-hiroe-o
 ##Function Index##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#create_pool-2">create_pool/2</a></td><td>create new pool.</td></tr><tr><td valign="top"><a href="#delete_pool-1">delete_pool/1</a></td><td>delet pool and disconnected to Redis.</td></tr><tr><td valign="top"><a href="#q-2">q/2</a></td><td>  
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#create_pool-2">create_pool/2</a></td><td>create new pool.</td></tr><tr><td valign="top"><a href="#create_pool-3">create_pool/3</a></td><td></td></tr><tr><td valign="top"><a href="#create_pool-4">create_pool/4</a></td><td></td></tr><tr><td valign="top"><a href="#create_pool-5">create_pool/5</a></td><td></td></tr><tr><td valign="top"><a href="#create_pool-6">create_pool/6</a></td><td></td></tr><tr><td valign="top"><a href="#create_pool-7">create_pool/7</a></td><td></td></tr><tr><td valign="top"><a href="#delete_pool-1">delete_pool/1</a></td><td>delet pool and disconnected to Redis.</td></tr><tr><td valign="top"><a href="#q-2">q/2</a></td><td>  
 Executes the given command in the specified connection.</td></tr><tr><td valign="top"><a href="#q-3">q/3</a></td><td></td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td></td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td></td></tr></table>
 
 
@@ -38,7 +38,62 @@ Executes the given command in the specified connection.</td></tr><tr><td valign=
 
 
 
-create new pool.<a name="delete_pool-1"></a>
+create new pool.<a name="create_pool-3"></a>
+
+###create_pool/3##
+
+
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Host::string()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+<br></br>
+
+
+<a name="create_pool-4"></a>
+
+###create_pool/4##
+
+
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Host::string(), Port::integer()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+<br></br>
+
+
+<a name="create_pool-5"></a>
+
+###create_pool/5##
+
+
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Host::string(), Port::integer(), Database::string()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+<br></br>
+
+
+<a name="create_pool-6"></a>
+
+###create_pool/6##
+
+
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Host::string(), Port::integer(), Database::string(), Password::string()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+<br></br>
+
+
+<a name="create_pool-7"></a>
+
+###create_pool/7##
+
+
+
+
+<pre>create_pool(PoolName::atom(), Size::integer(), Host::string(), Port::integer(), Database::string(), Password::string(), ReconnectSleep::integer()) -&gt; {ok, pid()} | {error, {already_started, pid()}}</pre>
+<br></br>
+
+
+<a name="delete_pool-1"></a>
 
 ###delete_pool/1##
 

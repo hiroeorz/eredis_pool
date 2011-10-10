@@ -8,7 +8,7 @@
 
 %% API
 -export([start_link/0]).
--export([create_pool/2, delete_pool/1]).
+-export([create_pool/3, delete_pool/1]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -27,14 +27,16 @@ start_link() ->
 %% @doc create new pool.
 %% @end
 %% ===================================================================
--spec(create_pool(PoolName::atom(), Size::integer()) -> 
+-spec(create_pool(PoolName::atom(), Size::integer(), Options::[tuple()]) -> 
              {ok, pid()} | {error,{already_started, pid()}}).
 
-create_pool(PoolName, Size) ->
+create_pool(PoolName, Size, Options) ->
     PoolSpec = {PoolName, {poolboy, start_link, [[{name,{local,PoolName}},
                                                   {worker_module,eredis},
                                                   {size, Size},
-                                                  {max_overflow, 10}]]},
+                                                  {max_overflow, 10}]
+                                                 ++ Options
+                                                ]},
                 permanent, 5000, worker,
                 [poolboy,eredis]},
 
