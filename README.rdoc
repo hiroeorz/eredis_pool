@@ -18,6 +18,55 @@ https://github.com/devinus/poolboy
 ==Testing
  $ make check
 
+==Settings
+edit src/eredis_pool.app.src
+
+{application, eredis_pool,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { eredis_pool_app, []}},
+  {env, [
+          {pools, [
+                   {default, [
+                              {size, 10},
+                              {max_overflow, 20}
+                             ]}
+	          ]}
+        ]}
+ ]}.
+
+add new pools.
+  {env, [
+          {pools, [
+                   {default, [
+                              {size, 10},
+                              {max_overflow, 20}
+                             ]},
+                   {pool1, [
+                              {size, 30},
+                              {max_overflow, 20},
+                              {host, "127.0.0.1"},
+                              {port, 6379}
+                             ]},
+                   {pool2, [
+                              {size, 20},
+                              {max_overflow, 20},
+                              {host, "127.0.0.1"},
+                              {port, 6379},
+                              {database, "user_db"},
+                              {password, "abc"},
+                              {reconnect_sleep, 100}
+                             ]}
+	          ]}
+        ]}
+
+
 ==Examples
 
 application start.
@@ -31,12 +80,32 @@ key-value set and get
  eredis_pool:q(default, ["GET", "foo"]).       
  {ok,<<"bar">>}
  
-create new pool
+create new pool with default settings.
  eredis_pool:create_pool(pool1, 10).
  {ok,<0.64.0>}
 
+host
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1").
+ {ok,<0.64.0>}
+
+port 
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379).
+ {ok,<0.64.0>}
+
+database
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db").
+ {ok,<0.64.0>}
+
+password
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db", "abc").
+ {ok,<0.64.0>}
+
+reconnect sleep
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db", "abc", 100).
+ {ok,<0.64.0>}
+
 using new pool
- eredis_pool:q(pool1, ["GET", "foo"]).       
+ eredis_pool:q(pool1, ["GET", "foo"]).
  {ok,<<"bar">>}
 
 delete pool

@@ -10,12 +10,10 @@
   {mod, { eredis_pool_app, []}},
   {env, [
           {pools, [
-                    {default, [
-                                {size, 10},
-                                {max_overflow, 20}
-                              ]
-                    }
-	          ]
-          }
+                   {default, [
+                              {size, 10},
+                              {max_overflow, 20}
+                             ]}
+	          ]}
         ]}
  ]}.
