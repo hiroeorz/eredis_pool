@@ -107,13 +107,13 @@ delete_pool(PoolName) ->
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec q(Client::pid(), Command::iolist()) ->
+-spec q(PoolName::atom(), Command::iolist()) ->
                {ok, binary() | [binary()]} | {error, Reason::binary()}.
 
 q(PoolName, Command) ->
     q(PoolName, Command, ?TIMEOUT).
 
--spec q(Client::pid(), Command::iolist(), Timeout::integer()) ->
+-spec q(PoolName::atom(), Command::iolist(), Timeout::integer()) ->
                {ok, binary() | [binary()]} | {error, Reason::binary()}.
 
 q(PoolName, Command, Timeout) ->
