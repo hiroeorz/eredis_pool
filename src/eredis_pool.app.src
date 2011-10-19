@@ -11,8 +11,8 @@
   {env, [
           {pools, [
                    {default, [
-                              {size, 10},
-                              {max_overflow, 20}
+                              {size, 100},
+                              {max_overflow, 40}
                              ]}
 	          ]}
         ]}

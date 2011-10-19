@@ -31,7 +31,7 @@ start_link() ->
              {ok, pid()} | {error,{already_started, pid()}}).
 
 create_pool(PoolName, Size, Options) ->
-    PoolSpec = {PoolName, {poolboy, start_link, [[{name,{local,PoolName}},
+    PoolSpec = {PoolName, {poolboy, start_link, [[{name,{global,PoolName}},
                                                   {worker_module,eredis},
                                                   {size, Size},
                                                   {max_overflow, 10}]
@@ -70,7 +70,7 @@ init([]) ->
     {ok, Pools} = application:get_env(eredis_pool, pools),
 
     PoolSpecs = lists:map(fun({PoolName, PoolConfig}) ->
-                                  Args = [{name, {local, PoolName}},
+                                  Args = [{name, {global, PoolName}},
                                           {worker_module, eredis}]
                                       ++ PoolConfig,
                                   
