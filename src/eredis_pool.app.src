@@ -10,7 +10,7 @@
   {mod, { eredis_pool_app, []}},
   {env, [
           {pools, [
-                   {default, [
+                   {dbsrv, [
                               {size, 100},
                               {max_overflow, 40}
                              ]}
