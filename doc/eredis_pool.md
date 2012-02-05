@@ -113,7 +113,7 @@ delet pool and disconnected to Redis.<a name="q-2"></a>
 
 
 
-<pre>q(Client::pid(), Command::iolist()) -&gt; {ok, binary() | [binary()]} | {error, Reason::binary()}</pre>
+<pre>q(PoolName::atom(), Command::iolist()) -&gt; {ok, binary() | [binary()]} | {error, Reason::binary()}</pre>
 <br></br>
 
 
@@ -136,7 +136,7 @@ eredisがnon-blockingなクエリ処理をする仕組みを活かす為です�
 
 
 
-<pre>q(Client::pid(), Command::iolist(), Timeout::integer()) -&gt; {ok, binary() | [binary()]} | {error, Reason::binary()}</pre>
+<pre>q(PoolName::atom(), Command::iolist(), Timeout::integer()) -&gt; {ok, binary() | [binary()]} | {error, Reason::binary()}</pre>
 <br></br>
 
 
