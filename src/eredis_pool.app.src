@@ -11,8 +11,8 @@
   {env, [
           {pools, [
                    {dbsrv, [
-                              {size, 100},
-                              {max_overflow, 40}
+                              {size, 10},
+                              {max_overflow, 30}
                              ]}
 	          ]}
         ]}
