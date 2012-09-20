@@ -17,7 +17,7 @@
 
 %% API
 -export([start/0, stop/0]).
--export([q/2, q/3, 
+-export([q/2, q/3, transaction/2,
          create_pool/2, create_pool/3, create_pool/4, create_pool/5,
          create_pool/6, create_pool/7, 
          delete_pool/1]).
@@ -116,3 +116,6 @@ q(PoolName, Command, Timeout) ->
     poolboy:transaction(PoolName, fun(Worker) ->
                                           eredis:q(Worker, Command, Timeout)
                                   end).
+
+transaction(PoolName, Fun) when is_function(Fun) ->
+    poolboy:transaction(PoolName, Fun).    

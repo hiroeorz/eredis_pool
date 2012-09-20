@@ -8,6 +8,45 @@
 -define(Clearnup, fun(_) -> application:stop(eredis_pool)  end).
 -define(DEFAULT, {global, dbsrv}).
 
+transaction_test_() ->
+    {inparallel,
+  
+     {setup, ?Setup, ?Clearnup,
+      [
+
+       { "transaction",
+         fun() ->
+                 eredis_pool:q(?DEFAULT, ["DEL", queue1, bar]),
+                 eredis_pool:q(?DEFAULT, ["DEL", queue2, bar]),
+
+                 {ok, _} =  
+                     eredis_pool:q(?DEFAULT, ["RPUSH", queue1, bar]),
+
+                 Fun = 
+                     fun(C) ->
+                             {ok, <<"OK">>} = eredis:q(C, ["MULTI"]),
+                             {ok, <<"QUEUED">>} = eredis:q(C, ["LREM", 
+                                                               queue1, 1, 
+                                                               bar]),
+
+                             {ok, <<"QUEUED">>} = eredis:q(C, ["RPUSH", 
+                                                               queue2, 
+                                                               bar]),
+                             {ok, _} = eredis:q(C, ["EXEC"]),
+
+                             ?assertEqual({ok, <<"0">>}, eredis:q(C, ["LLEN", 
+                                                                      queue1])),
+                             ?assertEqual({ok, <<"1">>}, eredis:q(C, ["LLEN", 
+                                                                      queue2]))
+                     end,
+
+                 eredis_pool:transaction(?DEFAULT, Fun)
+         end
+       }
+      ]
+     }
+    }.
+
 basic_test_() ->
     {inparallel,
   
