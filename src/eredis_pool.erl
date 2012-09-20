@@ -101,10 +101,6 @@ delete_pool(PoolName) ->
 %% command must be a valid Redis command and may contain arbitrary
 %% data which will be converted to binaries. The returned values will
 %% always be binaries.
-%%
-%% WorkerはcheckoutしてPidを得た後にすぐさまcheckinしています。
-%% eredisがnon-blockingなクエリ処理をする仕組みを活かす為です。
-%%
 %% @end
 %%--------------------------------------------------------------------
 -spec q(PoolName::atom(), Command::iolist()) ->
@@ -117,7 +113,6 @@ q(PoolName, Command) ->
                {ok, binary() | [binary()]} | {error, Reason::binary()}.
 
 q(PoolName, Command, Timeout) ->
-    Worker = poolboy:checkout(PoolName),
-    poolboy:checkin(PoolName, Worker),
-    Reply = eredis:q(Worker, Command, Timeout),
-    Reply.
+    poolboy:transaction(PoolName, fun(Worker) ->
+                                          eredis:q(Worker, Command, Timeout)
+                                  end).

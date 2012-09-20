@@ -7,7 +7,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 %% API
--export([start_link/0]).
+-export([start_link/0, start_link/2]).
 -export([create_pool/3, delete_pool/1]).
 
 %% Supervisor callbacks
@@ -22,10 +22,10 @@
 
 start_link() ->
     {ok, Pools} = application:get_env(eredis_pool, pools),
-    start_link(Pools).
+    start_link(Pools, global).
 
-start_link(Pools) ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, [Pools]).
+start_link(Pools, GlobalOrLocal) ->
+    supervisor:start_link({local, ?MODULE}, ?MODULE, [Pools, GlobalOrLocal]).
 
 %% ===================================================================
 %% @doc create new pool.
@@ -60,7 +60,7 @@ delete_pool(PoolName) ->
 %% Supervisor callbacks
 %% ===================================================================
 
-init([Pools]) ->
+init([Pools, GlobalOrLocal]) ->
     RestartStrategy = one_for_one,
     MaxRestarts = 10,
     MaxSecondsBetweenRestarts = 10,
@@ -72,7 +72,7 @@ init([Pools]) ->
     Type = worker,
 
     PoolSpecs = lists:map(fun({PoolName, PoolConfig}) ->
-                                  Args = [{name, {global, PoolName}},
+                                  Args = [{name, {GlobalOrLocal, PoolName}},
                                           {worker_module, eredis}]
                                       ++ PoolConfig,
                                   
