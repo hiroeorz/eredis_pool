@@ -118,4 +118,17 @@ q(PoolName, Command, Timeout) ->
                                   end).
 
 transaction(PoolName, Fun) when is_function(Fun) ->
-    poolboy:transaction(PoolName, Fun).    
+    F = fun(C) ->
+                try
+                    {ok, <<"OK">>} = eredis:q(C, ["MULTI"]),
+                    Fun(C),
+                    {ok, _} = eredis:q(C, ["EXEC"])
+                catch C:E ->
+                        {ok, <<"OK">>} = eredis:q(C, ["DISCARD"]),
+                        io:format("Error in redis transaction. ~p:~p", 
+                                  [C, E]),
+                        throw(C)
+                end
+        end,
+
+    poolboy:transaction(PoolName, F).    

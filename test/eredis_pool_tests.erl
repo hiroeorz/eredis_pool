@@ -24,25 +24,52 @@ transaction_test_() ->
 
                  Fun = 
                      fun(C) ->
-                             {ok, <<"OK">>} = eredis:q(C, ["MULTI"]),
                              {ok, <<"QUEUED">>} = eredis:q(C, ["LREM", 
                                                                queue1, 1, 
                                                                bar]),
 
                              {ok, <<"QUEUED">>} = eredis:q(C, ["RPUSH", 
                                                                queue2, 
-                                                               bar]),
-                             {ok, _} = eredis:q(C, ["EXEC"]),
-
-                             ?assertEqual({ok, <<"0">>}, eredis:q(C, ["LLEN", 
-                                                                      queue1])),
-                             ?assertEqual({ok, <<"1">>}, eredis:q(C, ["LLEN", 
-                                                                      queue2]))
+                                                               bar])
                      end,
 
-                 eredis_pool:transaction(?DEFAULT, Fun)
+                 eredis_pool:transaction(?DEFAULT, Fun),
+                 ?assertEqual({ok, <<"0">>}, 
+                              eredis_pool:q(?DEFAULT, ["LLEN", queue1])),
+                 ?assertEqual({ok, <<"1">>}, 
+                              eredis_pool:q(?DEFAULT, ["LLEN", queue2]))
+         end
+       },
+
+       { "rollback",
+         fun() ->
+                 eredis_pool:q(?DEFAULT, ["DEL", queue3, bar]),
+                 eredis_pool:q(?DEFAULT, ["DEL", queue4, bar]),
+
+                 {ok, _} =  
+                     eredis_pool:q(?DEFAULT, ["RPUSH", queue3, bar]),
+
+                 Fun = 
+                     fun(C) ->
+                             {ok, <<"QUEUED">>} = eredis:q(C, ["LREM", 
+                                                               queue3, 1, 
+                                                               bar]),
+                             throw(normal)
+                     end,
+
+                 try
+                     eredis_pool:transaction(?DEFAULT, Fun)
+                 catch throw:normal ->
+                         ok
+                 end,
+
+                 ?assertEqual({ok, <<"1">>}, 
+                              eredis_pool:q(?DEFAULT, ["LLEN", queue3])),
+                 ?assertEqual({ok, <<"0">>}, 
+                              eredis_pool:q(?DEFAULT, ["LLEN", queue4]))
          end
        }
+
       ]
      }
     }.
