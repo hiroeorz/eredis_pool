@@ -21,7 +21,11 @@
 %% ===================================================================
 
 start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+    {ok, Pools} = application:get_env(eredis_pool, pools),
+    start_link(Pools).
+
+start_link(Pools) ->
+    supervisor:start_link({local, ?MODULE}, ?MODULE, [Pools]).
 
 %% ===================================================================
 %% @doc create new pool.
@@ -56,7 +60,7 @@ delete_pool(PoolName) ->
 %% Supervisor callbacks
 %% ===================================================================
 
-init([]) ->
+init([Pools]) ->
     RestartStrategy = one_for_one,
     MaxRestarts = 10,
     MaxSecondsBetweenRestarts = 10,
@@ -66,8 +70,6 @@ init([]) ->
     Restart = permanent,
     Shutdown = 5000,
     Type = worker,
-
-    {ok, Pools} = application:get_env(eredis_pool, pools),
 
     PoolSpecs = lists:map(fun({PoolName, PoolConfig}) ->
                                   Args = [{name, {global, PoolName}},

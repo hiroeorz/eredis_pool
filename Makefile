@@ -19,7 +19,7 @@ xref:
 clean: 
 	@ $(REBAR) clean
 
-check:
+eunit:
 	@rm -rf .eunit
 	@mkdir -p .eunit
 	@ export ERL_MAX_ETS_TABLES=$MAX_ETS_COUNT
