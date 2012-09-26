@@ -74,10 +74,10 @@ application start.
  ok
 
 key-value set and get
- eredis_pool:q(default, ["SET", "foo", "bar"]).
+ eredis_pool:q({global, dbsrv}, ["SET", "foo", "bar"]).
  {ok,<<"OK">>}
  
- eredis_pool:q(default, ["GET", "foo"]).       
+ eredis_pool:q({global, dbsrv}, ["GET", "foo"]).       
  {ok,<<"bar">>}
  
 create new pool with default settings.

@@ -35,7 +35,7 @@ start_link(Pools, GlobalOrLocal) ->
              {ok, pid()} | {error,{already_started, pid()}}).
 
 create_pool(PoolName, Size, Options) ->
-    PoolSpec = {PoolName, {poolboy, start_link, [[{name,{global,PoolName}},
+    PoolSpec = {PoolName, {poolboy, start_link, [[{name,{global, PoolName}},
                                                   {worker_module,eredis},
                                                   {size, Size},
                                                   {max_overflow, 10}]

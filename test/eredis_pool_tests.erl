@@ -30,10 +30,11 @@ transaction_test_() ->
 
                              {ok, <<"QUEUED">>} = eredis:q(C, ["RPUSH", 
                                                                queue2, 
-                                                               bar])
+                                                               bar]),
+                             success
                      end,
 
-                 eredis_pool:transaction(?DEFAULT, Fun),
+                 {ok, success} = eredis_pool:transaction(?DEFAULT, Fun),
                  ?assertEqual({ok, <<"0">>}, 
                               eredis_pool:q(?DEFAULT, ["LLEN", queue1])),
                  ?assertEqual({ok, <<"1">>}, 
@@ -58,7 +59,7 @@ transaction_test_() ->
                      end,
 
                  try
-                     eredis_pool:transaction(?DEFAULT, Fun)
+                     {error, normal} = eredis_pool:transaction(?DEFAULT, Fun)
                  catch throw:normal ->
                          ok
                  end,
