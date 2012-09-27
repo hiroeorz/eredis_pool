@@ -22,8 +22,7 @@ clean:
 eunit:
 	@rm -rf .eunit
 	@mkdir -p .eunit
-	@ export ERL_MAX_ETS_TABLES=$MAX_ETS_COUNT
-	@$(REBAR) skip_deps=true eunit 
+	@ERL_FLAGS="-config test.config" $(REBAR) skip_deps=true eunit 
 
 edoc:
 	@$(REBAR) skip_deps=true doc
