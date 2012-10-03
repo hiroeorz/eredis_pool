@@ -24,5 +24,7 @@ eunit:
 	@mkdir -p .eunit
 	@ERL_FLAGS="-config test.config" $(REBAR) skip_deps=true eunit 
 
+test: eunit
+
 edoc:
 	@$(REBAR) skip_deps=true doc
