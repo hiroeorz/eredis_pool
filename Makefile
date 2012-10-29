@@ -2,7 +2,7 @@ ERL=erl
 BEAMDIR=./deps/*/ebin ./ebin
 REBAR=./rebar
 
-all: clean compile xref
+all: clean get-deps update-deps compile xref
 
 update-deps:
 	@$(REBAR) update-deps
@@ -23,6 +23,8 @@ eunit:
 	@rm -rf .eunit
 	@mkdir -p .eunit
 	@ERL_FLAGS="-config test.config" $(REBAR) skip_deps=true eunit 
+
+test: eunit
 
 edoc:
 	@$(REBAR) skip_deps=true doc

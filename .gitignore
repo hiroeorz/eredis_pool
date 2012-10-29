@@ -6,3 +6,4 @@ erl_crash.dump
 db
 deps
 .DS_Store
+eunit.coverage.xml
