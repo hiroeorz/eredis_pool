@@ -77,7 +77,7 @@ init([Pools, GlobalOrLocal]) ->
                                       ++ PoolConfig,
                                   
                                   {PoolName, {poolboy, start_link, [Args]},
-                                   Restart, Shutdown, Type, [poolboy, eredis]}
+                                   Restart, Shutdown, Type, []}
                           end, Pools),
 
     {ok, {SupFlags, PoolSpecs}}.
