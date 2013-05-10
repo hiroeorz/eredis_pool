@@ -1,4 +1,3 @@
-
 -module(eredis_pool_sup).
 
 -behaviour(supervisor).
@@ -22,7 +21,8 @@
 
 start_link() ->
     {ok, Pools} = application:get_env(eredis_pool, pools),
-    start_link(Pools, global).
+    {ok, GlobalOrLocal} = application:get_env(eredis_pool, global_or_local),
+    start_link(Pools, GlobalOrLocal).
 
 start_link(Pools, GlobalOrLocal) ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, [Pools, GlobalOrLocal]).
@@ -31,7 +31,7 @@ start_link(Pools, GlobalOrLocal) ->
 %% @doc create new pool.
 %% @end
 %% ===================================================================
--spec(create_pool(PoolName::atom(), Size::integer(), Options::[tuple()]) -> 
+-spec(create_pool(PoolName::atom(), Size::integer(), Options::[tuple()]) ->
              {ok, pid()} | {error,{already_started, pid()}}).
 
 create_pool(PoolName, Size, Options) ->
@@ -75,10 +75,8 @@ init([Pools, GlobalOrLocal]) ->
                                   Args = [{name, {GlobalOrLocal, PoolName}},
                                           {worker_module, eredis}]
                                       ++ PoolConfig,
-                                  
                                   {PoolName, {poolboy, start_link, [Args]},
                                    Restart, Shutdown, Type, []}
                           end, Pools),
 
     {ok, {SupFlags, PoolSpecs}}.
-
