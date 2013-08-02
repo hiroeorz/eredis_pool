@@ -84,7 +84,7 @@ Redis Pipeline
  Pipeline = [["SET", a, "1"],
       ["LPUSH", b, "3"],
       ["LPUSH", b, "2"]].
- eredis_pool:qp({global,dbsrv}, Pipeline)    
+ eredis_pool:qp({global,dbsrv}, Pipeline).    
  
 create new pool with default settings.
  eredis_pool:create_pool(pool1, 10).
