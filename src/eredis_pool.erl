@@ -117,13 +117,15 @@ q(PoolName, Command, Timeout) ->
                                           eredis:q(Worker, Command, Timeout)
                                   end).
 
+-spec qp(PoolName::atom(), Command::iolist(), Timeout::integer()) ->
+               {ok, binary() | [binary()]} | {error, Reason::binary()}.
 
 qp(PoolName, Pipeline) ->
     qp(PoolName, Pipeline, ?TIMEOUT).
 
 qp(PoolName, Pipeline, Timeout) ->
     poolboy:transaction(PoolName, fun(Worker) ->
-   		eredis:q(Worker, Pipeline, Timeout)
+   		eredis:qp(Worker, Pipeline, Timeout)
     end).
 
 
