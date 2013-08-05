@@ -79,6 +79,12 @@ key-value set and get
  
  eredis_pool:q({global, dbsrv}, ["GET", "foo"]).       
  {ok,<<"bar">>}
+
+Redis Pipeline
+ Pipeline = [["SET", a, "1"],
+      ["LPUSH", b, "3"],
+      ["LPUSH", b, "2"]].
+ eredis_pool:qp({global,dbsrv}, Pipeline).    
  
 create new pool with default settings.
  eredis_pool:create_pool(pool1, 10).
@@ -95,6 +101,8 @@ using new pool
 delete pool
  eredis_pool:delete_pool(pool1).    
  ok
+
+
 
 Other commands is here.
 http://redis.io/commands
