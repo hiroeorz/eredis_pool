@@ -18,7 +18,8 @@
 %%                              {size, 10},
 %%                              {max_overflow, 30}
 %%                             ]}
-%%	          ]}
+%%	          ]},
+%%          {name_registration, local}
 %%        ]}
 %%
 
