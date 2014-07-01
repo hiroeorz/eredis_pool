@@ -16,7 +16,7 @@ https://github.com/devinus/poolboy
  $ make
 
 ==Testing
- $ make check
+ $ make test
 
 ==Settings
 edit src/eredis_pool.app.src
