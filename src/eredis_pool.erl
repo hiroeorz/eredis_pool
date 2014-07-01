@@ -135,11 +135,11 @@ transaction(PoolName, Fun) when is_function(Fun) ->
                     {ok, <<"OK">>} = eredis:q(C, ["MULTI"]),
                     Fun(C),
                     eredis:q(C, ["EXEC"])
-                catch C:Reason ->
+                catch Klass:Reason ->
                         {ok, <<"OK">>} = eredis:q(C, ["DISCARD"]),
                         io:format("Error in redis transaction. ~p:~p", 
-                                  [C, Reason]),
-                        {error, Reason}
+                                  [Klass, Reason]),
+                        {Klass, Reason}
                 end
         end,
 

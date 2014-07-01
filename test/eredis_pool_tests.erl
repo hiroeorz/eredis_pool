@@ -59,7 +59,7 @@ transaction_test_() ->
                      end,
 
                  try
-                     {error, normal} = eredis_pool:transaction(?DEFAULT, Fun)
+                     {throw, normal} = eredis_pool:transaction(?DEFAULT, Fun)
                  catch throw:normal ->
                          ok
                  end,
