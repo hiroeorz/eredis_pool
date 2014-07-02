@@ -137,18 +137,16 @@ basic_test_() ->
                  ?assertMatch({ok, _},
                               eredis_pool:create_pool(pool1, 10)),
 
-                 ?assertMatch({ok, _}, eredis_pool:q({global, pool1},
-                                                     ["DEL", foo1])),
+                 ?assertMatch({ok, _}, eredis_pool:q(pool1, ["DEL", foo1])),
 
                  ?assertEqual({ok, undefined},
-                              eredis_pool:q({global, pool1}, ["GET", foo1])),
+                              eredis_pool:q(pool1, ["GET", foo1])),
 
                  ?assertEqual({ok, <<"OK">>},
-                              eredis_pool:q({global, pool1},
-                                            ["SET", foo1, bar])),
+                              eredis_pool:q(pool1, ["SET", foo1, bar])),
 
                  ?assertEqual({ok, <<"bar">>},
-                              eredis_pool:q({global, pool1}, ["GET", foo1])),
+                              eredis_pool:q(pool1, ["GET", foo1])),
 
                  ?assertEqual(ok, eredis_pool:delete_pool(pool1))
          end

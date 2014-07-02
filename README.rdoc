@@ -36,7 +36,7 @@ edit src/eredis_pool.app.src
                     {default, [
                                {size, 10},
                                {max_overflow, 20}
-                              ]}
+                              ], [] }
                    ]}
          ]}
   ]}.
@@ -47,16 +47,18 @@ add new pools.
                    {default, [
                               {size, 10},
                               {max_overflow, 20}
-                             ]},
+                             ], []},
                    {pool1, [
                               {size, 30},
-                              {max_overflow, 20},
+                              {max_overflow, 20}
+                             ], [
                               {host, "127.0.0.1"},
                               {port, 6379}
                              ]},
                    {pool2, [
                               {size, 20},
-                              {max_overflow, 20},
+                              {max_overflow, 20}
+                           ], [
                               {host, "127.0.0.1"},
                               {port, 6379},
                               {database, "user_db"},
@@ -91,7 +93,7 @@ create new pool with default settings.
  {ok,<0.64.0>}
 
 and omissible argments(host, port, database, password reconnect_sleep).
- eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, "user_db", "abc", 100).
+ eredis_pool:create_pool(pool1, 10, "127.0.0.1", 6379, 1, "abc", 100).
  {ok,<0.64.0>}
 
 using new pool

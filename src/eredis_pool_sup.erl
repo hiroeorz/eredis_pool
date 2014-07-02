@@ -35,14 +35,22 @@ start_link(Pools, GlobalOrLocal) ->
              {ok, pid()} | {error,{already_started, pid()}}).
 
 create_pool(PoolName, Size, Options) ->
-    PoolSpec = {PoolName, {poolboy, start_link, [[{name,{global, PoolName}},
-                                                  {worker_module,eredis},
-                                                  {size, Size},
-                                                  {max_overflow, 10}]
-                                                 ++ Options
-                                                ]},
-                permanent, 5000, worker,
-                [poolboy,eredis]},
+    create_pool(local, PoolName, Size, Options).
+
+%% ===================================================================
+%% @doc create new pool, selectable name zone global or local.
+%% @end
+%% ===================================================================
+-spec(create_pool(GlobalOrLocal::atom(), PoolName::atom(), Size::integer(), Options::[tuple()]) ->
+             {ok, pid()} | {error,{already_started, pid()}}).
+
+create_pool(GlobalOrLocal, PoolName, Size, Options) 
+  when GlobalOrLocal =:= local;
+       GlobalOrLocal =:= global ->
+
+    SizeArgs = [{size, Size}, {max_overflow, 10}],
+    PoolArgs = [{name, {GlobalOrLocal, PoolName}}, {worker_module, eredis}],
+    PoolSpec = poolboy:child_spec(PoolName, PoolArgs ++ SizeArgs, Options),
 
     supervisor:start_child(?MODULE, PoolSpec).
 
@@ -67,16 +75,10 @@ init([Pools, GlobalOrLocal]) ->
 
     SupFlags = {RestartStrategy, MaxRestarts, MaxSecondsBetweenRestarts},
 
-    Restart = permanent,
-    Shutdown = 5000,
-    Type = worker,
-
-    PoolSpecs = lists:map(fun({PoolName, PoolConfig}) ->
-                                  Args = [{name, {GlobalOrLocal, PoolName}},
-                                          {worker_module, eredis}]
-                                      ++ PoolConfig,
-                                  {PoolName, {poolboy, start_link, [Args]},
-                                   Restart, Shutdown, Type, []}
-                          end, Pools),
+    PoolSpecs = lists:map(fun({Name, SizeArgs, WorkerArgs}) ->
+        PoolArgs = [{name, {GlobalOrLocal, Name}},
+                    {worker_module, eredis}] ++ SizeArgs,
+        poolboy:child_spec(Name, PoolArgs, WorkerArgs)
+    end, Pools),
 
     {ok, {SupFlags, PoolSpecs}}.
