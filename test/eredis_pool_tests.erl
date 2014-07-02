@@ -58,11 +58,7 @@ transaction_test_() ->
                              throw(normal)
                      end,
 
-                 try
-                     {throw, normal} = eredis_pool:transaction(?DEFAULT, Fun)
-                 catch throw:normal ->
-                         ok
-                 end,
+		 {throw, normal} = eredis_pool:transaction(?DEFAULT, Fun),
 
                  ?assertEqual({ok, <<"1">>},
                               eredis_pool:q(?DEFAULT, ["LLEN", queue3])),
