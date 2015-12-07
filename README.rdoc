@@ -32,6 +32,7 @@ edit src/eredis_pool.app.src
                   ]},
    {mod, { eredis_pool_app, []}},
    {env, [
+           {global_or_local, local},
            {pools, [
                     {default, [
                                {size, 10},
@@ -43,6 +44,7 @@ edit src/eredis_pool.app.src
 
 add new pools.
   {env, [
+          {global_or_local, local},
           {pools, [
                    {default, [
                               {size, 10},
