@@ -34,6 +34,7 @@ edit src/eredis_pool.app.src
    {env, [
            {global_or_local, local},
            {pools, [
+                    {global_or_local, local},
                     {default, [
                                {size, 10},
                                {max_overflow, 20}
