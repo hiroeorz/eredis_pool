@@ -1,11 +1,13 @@
 {application, eredis_pool,
  [
   {description, ""},
-  {vsn, "1.1"},
+  {vsn, git},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  poolboy,
+                  eredis
                  ]},
   {mod, { eredis_pool_app, []}},
   {env, []}
