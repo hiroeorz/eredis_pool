@@ -5,7 +5,9 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  poolboy,
+                  eredis
                  ]},
   {mod, { eredis_pool_app, []}},
   {env, []}
